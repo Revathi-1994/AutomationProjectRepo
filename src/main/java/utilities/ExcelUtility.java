@@ -11,67 +11,31 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import constants.Constant;
 
 public class ExcelUtility {
+	static FileInputStream f;
+	static XSSFWorkbook w;
+	static XSSFSheet s;
 
+	public static String getStringData(int a, int b, String sheet) throws IOException {
+		f = new FileInputStream(Constant.TESTDATAFILE);
+		w = new XSSFWorkbook(f);
+		s = w.getSheet(sheet);
+		XSSFRow r = s.getRow(a);
+		XSSFCell c = r.getCell(b);
+		return c.getStringCellValue();
+
+	}
+
+	public static String getIntegerData(int a, int b, String sheet) throws IOException {
+		f = new FileInputStream(Constant.TESTDATAFILE);
+		w = new XSSFWorkbook(f);
+		s = w.getSheet(sheet);
+		XSSFRow r = s.getRow(a);
+		XSSFCell c = r.getCell(b);
+		int y = (int) c.getNumericCellValue();
+		return String.valueOf(y);
+	}
+
+}
 	
 
-		public static XSSFWorkbook w;
-
-
-
-	    public static XSSFSheet s;
-
-
-
-	    public static FileInputStream f;
-
-
-
-	public static String readStringData(int i,int j,String sheet)throws IOException {
-
-
-
-	f= new FileInputStream(Constant.TESTDATAFILE);
-
-	 w= new XSSFWorkbook(f);
-
-
-
-	      s= w.getSheet("sheet");
-
-
-
-		  XSSFRow r=s.getRow(i);
-
-
-
-	      XSSFCell c=r.getCell(j);
-
-
-
-	return c.getStringCellValue();
-
-	}
-
-	public static String readIntegerData(int i,int j, String sheet) throws IOException
-
-	{
-
-							f= new FileInputStream(Constant.TESTDATAFILE);
-	                      w= new XSSFWorkbook(f);
-
-	                      s= w.getSheet("sheet");
-
-	                      XSSFRow r=s.getRow(i);
-
-	                      XSSFCell c=r.getCell(j);
-
-	                      int value=(int) c.getNumericCellValue();
-
-	                      return String.valueOf(value);
-
-	}
-	}
-
-
-
-
+		
