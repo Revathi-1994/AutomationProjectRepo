@@ -15,69 +15,37 @@ public class ManageNewsPage {
 		PageFactory.initElements(driver, this);
 	}
 
-	@FindBy(name = "username")
-	private WebElement usernamefield;
-	@FindBy(name = "password")
-	private WebElement passwordfield;
-	@FindBy(xpath = "//button[text()='Sign In']") //// a[@onclick='click_button(2)']
-	private WebElement SignIn;
-	@FindBy(xpath = "//p[text()='Manage News']")
-	private WebElement manageNews;
-	@FindBy(xpath = "//a[@href='https://groceryapp.uniqassosiates.com/admin/news/add']") // "//a[@class='btn btn-rounded
-																							// btn-danger']"
-	private WebElement addnews;
-	@FindBy(xpath = "//textarea[@id='news']")
-	private WebElement enternews;
-	@FindBy(xpath = "//button[@type='submit']")
-	private WebElement savenewsButton;
-	@FindBy(xpath = "//h1[@class='m-0 text-dark']")
-	private WebElement manageNewstext;
-	@FindBy(xpath="//div[@class='alert alert-success alert-dismissible']")
-	private WebElement createNews;
-
-	public void enterusernameOnUsernameField(String username) {
-		usernamefield.sendKeys(username);
-	}
-
-	public void enterPasswordonPasswordField(String password) {
-		passwordfield.sendKeys(password);
-	}
-
-	public void clickOnsubmit() {
-		SignIn.click();
-	}
-
-	public void navigateOnManageNews() {
-		manageNews.click();
-	}
-
-	public void clickAddNewsButton() {
-
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("arguments[0].click();", addnews);
-
-	}
-
-	public void enterNewsontheField(String newscontent) {
-
-		enternews.clear();
-		enternews.sendKeys(newscontent);
-	}
-
-	public void clickOnSaveNewsButton() {
-		savenewsButton.click();
-	}
-
-	public  String getNewsText()
-	{
-		return manageNewstext.getText();
-		
-	}
+	@FindBy(xpath = "//a[@href='https://groceryapp.uniqassosiates.com/admin/news/add']")
+	private WebElement addnewsbutton;
+	@FindBy(xpath = "//textarea[@class=\'form-control\']")
+	private WebElement newstextbox;
+	@FindBy(xpath = "//button[@name='create']")
+	private WebElement saveNewsButton;
 	
-	public boolean alertVisible()
-	{
-		return createNews.isDisplayed();
-		
+	
+
+	
+
+	public ManageNewsPage clickaddnewsbutton() {
+		addnewsbutton.click();
+		return this;
 	}
 
+	public ManageNewsPage enternewsonnewstextbox(String testnewsdata) {
+		newstextbox.sendKeys(testnewsdata);
+		return this;
+	}
+
+	public ManageNewsPage clickOnSaveNewsButton() {
+		saveNewsButton.click();
+		return this;
+	}
+
+	
+	@FindBy(xpath="//i[@class='icon fas fa-check']")
+	private WebElement alertbox;
+	
+	public boolean alertboxVisiblity() {
+		return alertbox.isDisplayed();
+	}
 }

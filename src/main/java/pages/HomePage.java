@@ -14,43 +14,43 @@ public class HomePage {
 
 	}
 
-	@FindBy(name = "username")
-	private WebElement usernamefield;
-	@FindBy(name = "password")
-	private WebElement passwordfield;
-	@FindBy(xpath = "//button[text()='Sign In']")
-	private WebElement SignIn;
 	@FindBy(xpath = "//a[@data-toggle='dropdown']")
 	private WebElement Admin;
 	@FindBy(xpath = "//div[@class='dropdown-menu dropdown-menu-lg dropdown-menu-right text_black show']/a[2]")
 	private WebElement Logout;
-	@FindBy(xpath="//p[@class='login-box-msg']")
-	private WebElement startSession;
-	
-	
+	@FindBy(xpath = "//p[@class='login-box-msg']")
+	private WebElement signinpagetitle;
+	@FindBy(xpath = "//a[@class='small-box-footer' and @href='https://groceryapp.uniqassosiates.com/admin/list-admin']")
+	private WebElement adminuserlink;
+	@FindBy(xpath = "//a[@href='https://groceryapp.uniqassosiates.com/admin/list-news' and @class='active nav-link']")
+	private WebElement managenewsicon;
+	@FindBy(xpath="//a[@href='https://groceryapp.uniqassosiates.com/admin/list-category' and @class='active nav-link']")
+	private WebElement managecategoryfield;
 
-	public void enterusernameOnUsernameField(String username) {
-		usernamefield.sendKeys(username);
-	}
-
-	public void enterPasswordonPasswordField(String password) {
-		passwordfield.sendKeys(password);
-	}
-
-	public void clickOnsubmit() {
-		SignIn.click();
-	}
-
-	public void clickOnAdminlink() {
+	public HomePage clickOnAdminlink() {
 		Admin.click();
+		return this;
 	}
 
-	public void clickOnLogout() {
+	public loginPage clickOnLogout() {
 		Logout.click();
+		return new loginPage(driver);
 	}
-	public String getAdminText()
-	{
-		return startSession.getText();
-		
+
+	public String getsigninpagetitle() {
+		return signinpagetitle.getText();
+
+	}
+	public AdminUserPage clickOnAdminuser() {
+		adminuserlink.click();
+		return new AdminUserPage(driver);
+	}
+	public ManageNewsPage clickOnManageNewsIcon() {
+		managenewsicon.click();
+		return new ManageNewsPage(driver);			
+	}
+	public ManageCategoryPage clickOnManageCategoryField() {
+		managecategoryfield.click();
+		return new ManageCategoryPage(driver);
 	}
 }

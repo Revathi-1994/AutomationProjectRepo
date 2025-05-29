@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import constants.Constant;
+
 public class ManageCategoryPage {
 	
 	public WebDriver driver;
@@ -16,123 +18,81 @@ public class ManageCategoryPage {
 		PageFactory.initElements(driver, this);
 	}
 	
-	@FindBy(name = "username")
-	private WebElement usernamefield;
-	@FindBy(name = "password")
-	private WebElement passwordfield;
-	@FindBy(xpath = "//button[text()='Sign In']")
-	private WebElement SignIn;
-	@FindBy(xpath="//p[text()='Manage Category']")
-	private WebElement manageCategory;
-	@FindBy(xpath="//a[@href='https://groceryapp.uniqassosiates.com/admin/Category/add']")
-	private WebElement AddNewButton;
-	@FindBy(xpath="//input[@class='form-control']")
-	private WebElement categoryName;
-	@FindBy(xpath="//li[@class=\"ms-elem-selectable\"]")
+	@FindBy(xpath = "//a[@onclick='click_button(1)']")
+	private WebElement Newcategoryfield;
+	@FindBy(xpath = "//input[@id='category']")
+	private WebElement category;
+	@FindBy(xpath = "//li[@id='134-selectable']")
 	private WebElement selectgroup;
-	@FindBy(xpath="//input[@id='main_img']")
-	private WebElement chooseFile;
-	@FindBy(xpath="//input[@value=\"no\" and @name=\"top_menu\"]")
-	private WebElement clickRadio;
-	@FindBy(xpath="//button[@type='submit']")
-	private WebElement saveButton;
-	@FindBy(xpath="//a[@class='btn btn-rounded btn-primary']")
-	private WebElement searchCategory;
-	@FindBy(xpath="//input[@class='form-control']")
-	private WebElement categorySearchform;
-	@FindBy(xpath="//button[@class='btn btn-danger btn-fix']")
-	private WebElement SearchButton;
-	@FindBy(xpath="//h1[text()='List Categories']")
-	private WebElement ListCategory;
-	@FindBy(xpath="//div[@class='alert alert-success alert-dismissible']")
-	private WebElement AddNewCategory;
-	@FindBy(xpath="//td[text()='New Category Sale']")
-	private WebElement AddedCategory;
+	@FindBy(xpath = "//input[@id='main_img']")
+	private WebElement image;
+	@FindBy(xpath = "//button[text()='Save']")
+	WebElement savecategorybutton;
+	
 
-	public void enterusernameOnUsernameField(String username) {
-		usernamefield.sendKeys(username);
+	
+
+	public ManageCategoryPage clickOnAddNewCategoryField() {
+		Newcategoryfield.click();
+		return this;
 	}
 
-	public void enterPasswordonPasswordField(String password) {
-		passwordfield.sendKeys(password);
+	public ManageCategoryPage EnterCategory(String categoryname) {
+		category.sendKeys(categoryname);
+		return this;
 	}
 
-	public void clickOnsubmit() {
-		SignIn.click();
-	}
-	
-	public void clickOnManageCategory()
-	{
-		manageCategory.click();
-	}
-	
-	public void clickAddNewCategory()
-	{
-		AddNewButton.click();
-	}
-	
-	public void enterCategoryName(String categoryname)
-	{
-		categoryName.sendKeys(categoryname);
-	}
-	
-	public void selectGroup()
-	{
+	public ManageCategoryPage selectGroup() {
 		selectgroup.click();
+		return this;
 	}
-	
-	public void scrollDown()
-	{
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("window.scrollBy(0, 500);"); 
 
+	public ManageCategoryPage uploadImage() {
+		image.sendKeys(Constant.TESTDATAIMAGE);
+		return this;
 	}
-	public void uploadFile(String path)
-	{
-		chooseFile.sendKeys(path);
+
+	public ManageCategoryPage saveCategory() {
+		JavascriptExecutor javascript = (JavascriptExecutor) driver;
+		javascript.executeScript("arguments[0].click();", savecategorybutton);//add in page utility class
+		return this;
 	}
+
 	
-	public void selectRadioButton()
-	{
-		clickRadio.click();
+	@FindBy(xpath = "//a[@href='javascript:void(0)']")
+	WebElement searchcategory;
+	@FindBy(xpath = "//input[@class='form-control']")
+	WebElement categoryname;
+	@FindBy(xpath = "//button[@name='Search']")
+	WebElement searchcategorybutton;
+	@FindBy(xpath="//div[@class='alert alert-success alert-dismissible']")
+	WebElement alertmessage;
+	@FindBy(xpath="//a[@href='https://groceryapp.uniqassosiates.com/admin/category/edit?edit=2072&page_ad=1']")
+	WebElement editcategory;
+	@FindBy(xpath="//span[text()='Active']")
+	WebElement searchcategoryfoundmessage;
+
+	public ManageCategoryPage searchCategory() {
+		searchcategory.click();
+		return this;
 	}
-	
-	public void saveCategoryclickButton()
-	{
-		saveButton.click();
+
+	public ManageCategoryPage enterCategoryname(String searchcategoryname) {
+		categoryname.sendKeys(searchcategoryname);
+		return this;
 	}
-	
-	public void navigateToManageCategory()
-	{
-		manageCategory.click();
+
+	public ManageCategoryPage clickOnSearchCategoryButton() {
+		searchcategorybutton.click();
+		return this;
 	}
-	
-	public void searchCategoryButton()
+	public boolean getAlertMessageForSuccessfullCategoryCreation()
 	{
-		searchCategory.click();
+		return alertmessage.isDisplayed();
 	}
-	
-	public void searchCategoryField(String categoryname)
+	public String getSearchedCategoryMessage()
 	{
-		categorySearchform.sendKeys(categoryname);
+		return searchcategoryfoundmessage.getText();
 	}
-	public void clickSearchButton()
-	{
-		SearchButton.click();
-	}
-	public String presentListCategories()
-	{
-		return ListCategory.getText();
-		
-	}
-	public boolean addNewCategorySuccessfully()
-	{
-		return AddNewCategory.isDisplayed();
-		
-	}
-	public String searchAddedNewCategory()
-	{
-		return AddedCategory.getText();
-		
-	}
+
 }

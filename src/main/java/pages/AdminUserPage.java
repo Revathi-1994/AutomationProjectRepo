@@ -15,14 +15,6 @@ public class AdminUserPage {
 
 	}
 
-	@FindBy(name = "username")
-	private WebElement usernamefield;
-	@FindBy(name = "password")
-	private WebElement passwordfield;
-	@FindBy(xpath = "//button[text()='Sign In']")
-	private WebElement SignIn;
-	@FindBy(xpath = "//a[@class='small-box-footer' and @href='https://groceryapp.uniqassosiates.com/admin/list-admin']")
-	private WebElement Adminuserlink;
 	@FindBy(xpath = "//a[@class='btn btn-rounded btn-danger']")
 	private WebElement NewLink;
 	@FindBy(xpath = "//input[@id='username']")
@@ -32,95 +24,79 @@ public class AdminUserPage {
 	@FindBy(xpath = "//select[@name='user_type']")
 	private WebElement Usertypedropdown;
 	@FindBy(xpath = "//button[@type='submit' and @name='Create']")
-	private WebElement saveLink;
-	@FindBy(xpath="//a[@class='btn btn-rounded btn-primary']")
-	private WebElement searchButton;
-	@FindBy(xpath="//input[@class='form-control' and @id='un']")
-	private WebElement searchuser;
-	@FindBy(xpath="//select[@class='form-control' and @id='ut']")
-	private WebElement searchusertype;
-	@FindBy(xpath="//button[@type='submit' and @name='Search']")
-	private WebElement searchbutton;
-	@FindBy(xpath="//div[@class='alert alert-success alert-dismissible']")
-	private WebElement AlertuserSuccess;
-	@FindBy(xpath="//td[text()='Soumya']")
-	private WebElement searchResult;
+	private WebElement savebutton;
 
-	public void enterusernameOnUsernameField(String username) {
-		usernamefield.sendKeys(username);
-	}
+	
 
-	public void enterPasswordonPasswordField(String password) {
-		passwordfield.sendKeys(password);
-	}
-
-	public void clickOnsubmit() {
-		SignIn.click();
-	}
-
-	public void clickOnAdminuser() {
-		Adminuserlink.click();
-	}
-
-	public void clickOnNew() {
+	public AdminUserPage clickOnNew() {
 
 		NewLink.click();
+		return this;
 	}
 
-	public void enternewusernameOnField(String user) {
+	public AdminUserPage enternewusernameOnField(String user) {
 		UsernameNew.sendKeys(user);
+		return this;
 	}
 
-	public void enternewPasswordOntheField(String pass) {
+	public AdminUserPage enternewPasswordOntheField(String pass) {
 		PasswordNew.sendKeys(pass);
+		return this;
 	}
 
-	public void selectUserType(String Admin) {
-
+	public AdminUserPage selectUserType() {
 		Select select = new Select(Usertypedropdown);
-		select.selectByVisibleText(Admin);
+		select.selectByIndex(1);
+		return this;
 	}
 
-	public void clickSaveLink() {
-		saveLink.click();
+	public AdminUserPage clickOnsavebutton() {
+		savebutton.click();
+		return this;
 	}
-	
-	public void searchForCreatedUser()
-	{
+
+	@FindBy(xpath = "//a[@class='btn btn-rounded btn-primary']")
+	private WebElement searchButton;
+	@FindBy(xpath = "//input[@class='form-control' and @id='un']")
+	private WebElement searchuser;
+	@FindBy(xpath = "//select[@class='form-control' and @id='ut']")
+	private WebElement searchusertype;
+	@FindBy(xpath = "//button[@type='submit' and @name='Search']")
+	private WebElement searchbutton;
+
+	public AdminUserPage searchForCreatedUser() {
 		searchButton.click();
+		return this;
 	}
-	
-	public void searchForUser(String searchusername)
-	{
-		searchuser.sendKeys(searchusername);	
+
+	public AdminUserPage searchForUser(String searchusername) {
+		searchuser.sendKeys(searchusername);
+		return this;
 	}
-	
-	public void selectUserTypesearch(String Admin)
-	{
+
+	public AdminUserPage selectUserTypesearch(String Admin) {
 		Select select = new Select(searchusertype);
 		select.selectByVisibleText(Admin);
-	}
-	
-	public void searchUser()
-	{
-		searchbutton.click();
-	}
-	
-	public boolean alertSuccessCreateUser()
-	{
-		return AlertuserSuccess.isDisplayed();
-		
-	}
-	
-	public boolean searchReceivedUser()
-	{
-		return searchResult.isDisplayed();
-		
+		return this;
 	}
 
-	public void clickloginButtonField() {
-		// TODO Auto-generated method stub
-		
+	public AdminUserPage searchUser() {
+		searchbutton.click();
+		return this;
 	}
+	@FindBy(xpath="//div[@class='alert alert-success alert-dismissible']")
+	private WebElement successmessage;
+	@FindBy(xpath = "//a[@href='https://groceryapp.uniqassosiates.com/admin/user/delete?del=13862&page_ad=1']")
+	private WebElement deleteExistingUserButton;
+
+	public boolean verifyUserDisplay() {
+		return deleteExistingUserButton.isDisplayed();
+
+	}
+	public boolean successMessage() {
+
+		return successmessage.isDisplayed();
+	}
+
 
 }

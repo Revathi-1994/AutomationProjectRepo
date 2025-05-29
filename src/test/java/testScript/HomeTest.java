@@ -6,24 +6,30 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import AutomationCore.Base;
+import constants.Messages;
 import pages.HomePage;
+import pages.loginPage;
 import utilities.ExcelUtility;
 
 public class HomeTest extends Base{
-	@Test(description = "Verify user able logout from home page")
-	public void verifyWhetherUserisabletosuccessfullyLogoutfromeHomePage() throws IOException {
-		String username = ExcelUtility.getStringData(0, 0, "LoginPage");
-		String password = ExcelUtility.getStringData(0, 1, "LoginPage");
+	HomePage homepage;
 
-		HomePage homepage = new HomePage(driver);
-		homepage.enterusernameOnUsernameField(username);
-		homepage.enterPasswordonPasswordField(password);
-		homepage.clickOnsubmit();
+	@Test(description = "Verify whether user able to logout from home page")
+	public void verifyUserLogoutFromHomepage() throws IOException {
+
+		String username = ExcelUtility.getStringData(1, 0, "LoginPage");
+		String password = ExcelUtility.getStringData(1, 1, "LoginPage");
+		loginPage login = new loginPage(driver);
+		login.enterUsernameOnUsernameField(username).enterPasswordOnPasswordField(password);
+		homepage=login.clickOnsubmit();
 		homepage.clickOnAdminlink();
-		homepage.clickOnLogout();
-		
+		login=homepage.clickOnLogout();
+
 		String expected = "Sign in to start your session";
-		String actual = homepage.getAdminText();
-		Assert.assertEquals(actual, expected, "User not logged out from the session");
+		String actual = homepage.getsigninpagetitle();
+		Assert.assertEquals(actual, expected,Messages.LOGOUTERROR);
+
 	}
+
+	
 }

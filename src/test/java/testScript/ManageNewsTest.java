@@ -3,40 +3,33 @@ package testScript;
 import java.io.IOException;
 
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import AutomationCore.Base;
+import constants.Messages;
+import pages.HomePage;
 import pages.ManageNewsPage;
+import pages.loginPage;
 import utilities.ExcelUtility;
 
 public class ManageNewsTest extends Base {
-	@BeforeMethod(description = "Verify the user able to navigate Manage News Successfully")
-	public void verifyNavigationToManageNews() throws IOException {
-		String username = ExcelUtility.getStringData(0, 0, "LoginPage");
-		String password = ExcelUtility.getStringData(0, 1, "LoginPage");
+	ManageNewsPage managenews;
+	HomePage homepage;
 
-		ManageNewsPage news = new ManageNewsPage(driver);
-		news.enterusernameOnUsernameField(username);
-		news.enterPasswordonPasswordField(password);
-		news.clickOnsubmit();
-		news.navigateOnManageNews();
+	@Test(description = "Verify whether user able to add new News")
+	public void verifyAddNews() throws IOException {
+		String username = ExcelUtility.getStringData(1, 0, "LoginPage");
+		String password = ExcelUtility.getStringData(1, 1, "LoginPage");
+		loginPage login = new loginPage(driver);
+		login.enterUsernameOnUsernameField(username).enterPasswordOnPasswordField(password);
+		homepage=login.clickOnsubmit();
 		
-		String expected = "Manage News";
-		String actual = news.getNewsText();
-		Assert.assertEquals(actual, expected,"User unable to navigate to the Manage News section");
-	}
-
-	@Test(description = "Verify the user able to add the new news successfully")
-	public void verifyAddNewnews() throws IOException {
-		String newscontent = ExcelUtility.getStringData(6, 0, "LoginPage");
-
-		ManageNewsPage news = new ManageNewsPage(driver);
-		news.clickAddNewsButton();
-		news.enterNewsontheField(newscontent);
-		news.clickOnSaveNewsButton();
+		managenews=homepage.clickOnManageNewsIcon();
+		String news = ExcelUtility.getStringData(1, 0, "News");
+		managenews.clickaddnewsbutton().enternewsonnewstextbox(news).clickOnSaveNewsButton();
 		
-		boolean isDisplayedAlert = news.alertVisible();
-		Assert.assertTrue(isDisplayedAlert, "Unable to create the news successfully");
+		boolean isalertboxVisible = managenews.alertboxVisiblity();
+		Assert.assertTrue(isalertboxVisible,Messages.ADDNEWSERROR);
+
 	}
 }
