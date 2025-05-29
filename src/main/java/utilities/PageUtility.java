@@ -31,4 +31,13 @@ public class PageUtility {
 	public void pageup() {
 		javascript.executeScript("window.scrollBy(0,-350)", "");
 	}
+	public void rightclick() {
+		javascript.executeScript("window.scrollBy(0,-350)", "");
+	}
+	public void mouseover() {
+		javascript.executeScript("window.scrollBy(0,-350)", "");
+	}
+	public void radiobutton() {
+		javascript.executeScript("window.scrollBy(0,-350)", "");
+	}
 }
